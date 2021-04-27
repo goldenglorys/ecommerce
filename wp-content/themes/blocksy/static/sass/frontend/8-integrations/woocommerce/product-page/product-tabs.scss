@@ -1,0 +1,154 @@
+.product > .woocommerce-tabs {
+	padding-top: 60px;
+}
+
+.woocommerce-tabs .tabs {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: var(--vertical-alignment, center);
+	--listIndent: 0;
+	--listItemSpacing: 0;
+	--listStyleType: none;
+	--contentSpacing: 50px;
+
+	@include media-breakpoint-down (sm) {
+		flex-direction: column;
+		--vertical-alignment: stretch;
+	}
+
+	@include media-breakpoint-up (md) {
+		justify-content: var(--horizontal-alignment, center);
+	}
+
+	li {
+		display: inline-flex;
+		position: relative;
+
+		&:before, &:after {
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 100%;
+			opacity: var(--tab-visibility, 0);
+			background: var(--tab-background, rgba(242, 244, 247, 0.7));
+		}
+
+		&:before {
+			content: '';
+		}
+
+		&.active {
+			z-index: 1;
+			--tab-visibility: 1;
+
+			a {
+				color: var(--linkActiveColor);
+			}
+		}
+	}
+
+	a {
+		position: relative;
+		width: 100%;
+		padding: var(--tab-padding, 1em 2em);
+		text-align: center;
+	}
+
+	@include media-breakpoint-up (md) {
+		&:before, &:after {
+			flex: 1 0 auto;
+			height: 1px;
+			background: var(--border-color);
+		}
+	}
+}
+
+// type 1
+.woocommerce-tabs[data-type*="type-1"] .tabs {
+	li {
+		@include media-breakpoint-down (sm) {
+			&:not(:first-child) {
+				margin-top: -1px;
+			}
+		}
+
+		@include media-breakpoint-up (md) {
+			margin-right: -1px;
+		}
+	}
+
+	a {
+		border: 1px solid var(--border-color);
+	}
+
+	.active a {
+		border-color: var(--tab-background, var(--border-color));
+	}
+}
+
+// type 2
+.woocommerce-tabs[data-type*="type-2"] .tabs {
+	--tab-padding: 1em 1.5em;
+
+	@include media-breakpoint-up (md) {
+		--vertical-alignment: flex-end;
+	}
+
+	li {
+		&:before {
+			bottom: -1px;
+			height: 3px;
+			border-radius: 2px;
+		}
+
+		&:not(.active) {
+			&:after {
+				content: '';
+				height: 1px;
+				--tab-visibility: 1;
+				--tab-background: var(--border-color);
+			}
+		}
+	}
+}
+
+
+
+// tabs alignment
+.woocommerce-tabs[data-type*="left"] {
+	--horizontal-alignment: flex-start;
+}
+
+.woocommerce-tabs[data-type*="right"] {
+	--horizontal-alignment: flex-end;
+}
+
+@include media-breakpoint-up (md) {
+	[data-type*="left"] .tabs {
+		&:after {
+			content: '';
+		}
+	}
+
+	[data-type*="center"] .tabs {
+		&:before, &:after {
+			content: '';
+		}			
+	}
+
+	[data-type*="right"] .tabs {
+		&:before {
+			content: '';
+		}
+	}
+}
+
+
+// tabs panel
+.woocommerce-tabs .panel {
+	> h2:first-child {
+		--fontSize: 20px;
+		margin-bottom: 30px;
+	}
+}
